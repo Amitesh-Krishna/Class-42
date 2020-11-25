@@ -55,7 +55,9 @@ class Game {
         curCar.x = x;
         curCar.y = y;
         if(index == player.index){
-          curCar.shapeColor = "red";
+          fill("red");
+          ellipse(x,y+60,30,30);
+          //curCar.shapeColor = "red";
           camera.x = displayWidth/2;
           camera.y = curCar.y;
         }
