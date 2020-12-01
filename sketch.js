@@ -12,6 +12,9 @@ var database;
 
 var form, player, game;
 
+var finishedPlayers = 0;
+var passedFinish = false;
+
 function preload(){
     ground = loadImage("images/ground.png");
     track = loadImage("images/track.jpg");
@@ -19,6 +22,9 @@ function preload(){
     car2I = loadImage("images/car2.png");
     car3I = loadImage("images/car3.png");
     car4I = loadImage("images/car4.png");
+    bMedal = loadImage("images/Bronze.png");
+    sMedal = loadImage("images/Silver.png");
+    gMedal = loadImage("images/Gold.png");
 }
 
 function setup(){
@@ -31,15 +37,17 @@ function setup(){
 
 
 function draw(){
-    //background(ground);
-    if(playerCount === 4){
+    if(playerCount === 4 && finishedPlayers == 0){
         game.update(1);
     }
     if(gameState === 1){
         clear();
         game.play();
     }
-    if(gameState === 2){
-        game.end();
+    if(finishedPlayers == 4){
+        game.update(2);
+    }
+    if(gameState == 2){
+        game.displayRanks();
     }
 }

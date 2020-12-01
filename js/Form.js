@@ -33,8 +33,13 @@ class Form {
     });
 
     this.reset.mousePressed(()=>{
-      game.update(0);
-      player.updateCount(0);
+        game.update(0);
+        player.updateCount(0);
+        Player.updateCarsAtEnd(0);
+        database.ref("/").update({
+            finshedPlayers : 0,
+            players : null
+        });
     });
 
   }

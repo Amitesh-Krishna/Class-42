@@ -38,7 +38,7 @@ class Game {
 
   play(){
     form.hide();
-    player.getCarsAtEnd();
+    player.getFinishedPlayers();
     textSize(30);
     text("Game Start", 120, 100)
     Player.getPlayerInfo();
@@ -68,21 +68,41 @@ class Game {
       }
     }
 
-    if(keyIsDown(UP_ARROW) && player.index !== null){
-      player.distance +=10
-      player.update();
+    if(keyIsDown(UP_ARROW) && player.index !== null && passedFinish == false){
+        player.distance +=10
+        player.update();
     }
 
-    if(player.distance>5260){
-        gameState = 2;
-        //this.update(gameState);
-        Player.updateCarsAtEnd(player.rank+1);
+    if(player.distance>5260 && passedFinish == false){
+        Player.updateFinishedPlayers();
+        passedFinish = true;
+        player.rank = finishedPlayers;
+        player.update();
     }
-
     drawSprites();
   }
 
-  end(){
-    console.log(player.rank);
+  displayRanks(){
+    camera.x = 0;
+    camera.y = 0;
+    imageMode(CENTER);
+    Player.getPlayerInfo();
+    image(bMedal,displayWidth/-4,displayHeight/9 - 100,200,240);
+    image(sMedal,displayWidth/4,displayHeight/10 - 100,200,240);
+    image(gMedal,displayWidth,-100,250,300);
+    textAlign(CENTER);
+    textSize(50);
+    for(var plr in allPlayers){
+        if(allPlayers[plr].rank == 1){
+            text("1st: "+ allPlayers[plr].name,displayWidth,85);
+        }else if(allPlayers[plr].rank == 2){
+            text("2nd: "+ allPlayers[plr].name,displayWidth/4,displayHeight/9 + 85)
+        }else if(allPlayers[plr].rank == 3){
+            text("3rd: "+ allPlayers[plr].name,displayWidth/-4,displayHeight/10 + 85);
+        }else{
+            textSize(40);
+            text("Sorry, You were unable to win: " + allPlayers[plr].name,0,225);
+        }
+    }
   }
 }
